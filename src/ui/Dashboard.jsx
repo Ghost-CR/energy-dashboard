@@ -1,9 +1,9 @@
 import React, { useState, useMemo } from 'react';
 import { Zap, TrendingUp, TrendingDown, DollarSign, Activity, AlertTriangle, Download, FileText, Calendar } from 'lucide-react';
 import { LineChart, Line, AreaChart, Area, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import { DashboardService } from './domain/services/DashboardService';
-import { MockEnergyRepository } from './infraestructure/mock/EnergyMockRepository';
-import { EnergyMetricsService } from './domain/services/EnergyMetricsService';
+import { DashboardService } from '../domain/services/DashboardService';
+import { MockEnergyRepository } from '../infraestructure/mock/EnergyMockRepository';
+import { EnergyMetricsService } from '../domain/services/EnergyMetricsService';
 
 const COLORS = {
   primary: '#E0A25B',
