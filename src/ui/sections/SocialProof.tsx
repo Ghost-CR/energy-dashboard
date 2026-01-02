@@ -38,50 +38,13 @@ const SocialProof = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center space-x-2 bg-white rounded-full px-4 py-2 border-2 border-gray-200 mb-6">
-            <Star className="w-4 h-4" style={{ color: '#DC0F1A' }} />
-            <span className="text-sm font-semibold text-gray-700">
-              Respaldados por líderes
-            </span>
-          </div>
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-            Confianza que se construye
-            <span className="block" style={{ color: '#DC0F1A' }}>
-              con resultados reales
-            </span>
+            Nuestros
+            <span style={{ color: '#DC0F1A' }}> clientes </span>
           </h2>
           <p className="text-xl text-gray-600">
             Desde startups hasta corporaciones multinacionales, empresas líderes confían en iotomato.
           </p>
-        </div>
-
-        {/* Stats Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-20">
-          {stats.map((stat, idx) => {
-            const Icon = stat.icon;
-            return (
-              <div
-                key={idx}
-                className="bg-white rounded-xl p-6 border-2 border-gray-200 text-center hover:border-gray-300 transition-all duration-300 hover:shadow-lg"
-              >
-                <div 
-                  className="w-12 h-12 rounded-xl mx-auto mb-4 flex items-center justify-center"
-                  style={{ backgroundColor: 'rgba(220, 15, 26, 0.1)' }}
-                >
-                  <Icon className="w-6 h-6" style={{ color: '#DC0F1A' }} />
-                </div>
-                <p 
-                  className="text-4xl font-bold mb-2"
-                  style={{ color: '#DC0F1A' }}
-                >
-                  {stat.value}
-                </p>
-                <p className="text-sm text-gray-600 font-medium">
-                  {stat.label}
-                </p>
-              </div>
-            );
-          })}
         </div>
 
         {/* Featured Client - Repsol */}

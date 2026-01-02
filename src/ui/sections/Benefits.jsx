@@ -216,40 +216,6 @@ const Benefits = () => {
           </div>
         </div>
 
-        {/* Final CTA */}
-        <div 
-          className="rounded-2xl p-12 text-center relative overflow-hidden"
-          style={{ background: 'linear-gradient(135deg, #DC0F1A 0%, #B00D16 100%)' }}
-        >
-          <div className="relative z-10">
-            <h3 className="text-3xl md:text-4xl font-bold text-white mb-4">
-              Empieza a ahorrar hoy
-            </h3>
-            <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
-              Únete a las +500 empresas que ya están optimizando su consumo energético con iotomato.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button 
-                className="px-8 py-4 bg-white text-gray-900 rounded-xl font-semibold text-lg shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 flex items-center justify-center space-x-2"
-              >
-                <span>Solicitar Servicio</span>
-                <ArrowRight className="w-5 h-5" />
-              </button>
-              <button 
-                className="px-8 py-4 bg-white/10 backdrop-blur-sm text-white rounded-xl font-semibold text-lg border-2 border-white/30 hover:bg-white/20 transition-all duration-300 flex items-center justify-center space-x-2"
-              >
-                <span>Agendar Demo</span>
-              </button>
-            </div>
-            <p className="text-sm text-white/70 mt-6">
-              Sin tarjeta de crédito • Implementación en 48 horas • Soporte 24/7
-            </p>
-          </div>
-
-          {/* Decorative elements */}
-          <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-0 left-0 w-64 h-64 bg-white/5 rounded-full blur-3xl"></div>
-        </div>
       </div>
     </section>
   );

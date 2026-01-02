@@ -139,18 +139,18 @@ const Solution = () => {
             {[
               {
                 step: '1',
-                title: 'Conecta',
-                description: 'Instalación rápida en 48 horas sin interrumpir tus operaciones.'
+                title: 'Envío de parámetros a la nube',
+                description: 'Instalamos sensores iotomato para monitorear los parámetros eléctricos. Después, estos sensores envían la data a la nube 24/7.'
               },
               {
                 step: '2',
-                title: 'Monitorea',
-                description: 'Dashboard en vivo con todos tus datos energéticos actualizados.'
+                title: 'Transformación de datos',
+                description: 'Nuestra plataforma los procesa, los analiza y los transforma en indicadores fáciles de entender.'
               },
               {
                 step: '3',
-                title: 'Optimiza',
-                description: 'Recibe alertas y recomendaciones para reducir costos inmediatamente.'
+                title: 'Manejo de información',
+                description: 'La información generada es presentada mediante reportes, alertas, dashboards, mensajes de correo, sms y mucho más. Esto permte anticipar fallas y optimizar el consumo energético.'
               }
             ].map((item, idx) => (
               <div key={idx} className="text-center">
@@ -169,24 +169,6 @@ const Solution = () => {
               </div>
             ))}
           </div>
-        </div>
-
-        {/* CTA */}
-        <div className="text-center mt-16">
-          <button 
-            className="px-8 py-4 text-white rounded-xl font-semibold text-lg shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105"
-            style={{ 
-              backgroundColor: '#DC0F1A',
-              boxShadow: '0 10px 40px rgba(220, 15, 26, 0.3)'
-            }}
-            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#B00D16'}
-            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#DC0F1A'}
-          >
-            Ver el Dashboard en Acción
-          </button>
-          <p className="text-sm text-gray-500 mt-4">
-            Sin tarjeta de crédito • Implementación en 48 horas
-          </p>
         </div>
       </div>
     </section>

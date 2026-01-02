@@ -1,5 +1,5 @@
 import React from 'react';
-import { Zap, Mail, Phone, MapPin, Linkedin, Twitter, Facebook, Instagram, ArrowRight } from 'lucide-react';
+import { Zap, Mail, Phone, MapPin, Linkedin, Twitter, Facebook, Instagram, ArrowRight, X } from 'lucide-react';
 
 const Footer = () => {
   const footerLinks = {
@@ -31,7 +31,7 @@ const Footer = () => {
 
   const socialLinks = [
     { icon: Linkedin, href: 'https://linkedin.com/company/iotomato', label: 'LinkedIn' },
-    { icon: Twitter, href: 'https://twitter.com/iotomato', label: 'Twitter' },
+    { icon: X, href: 'https://x.com/iotomato1?lang=es', label: 'X' },
     { icon: Facebook, href: 'https://facebook.com/iotomato', label: 'Facebook' },
     { icon: Instagram, href: 'https://instagram.com/iotomato', label: 'Instagram' }
   ];
@@ -226,9 +226,6 @@ const Footer = () => {
           <div className="text-center md:text-right">
             <p className="text-sm text-gray-400">
               © {new Date().getFullYear()} iotomato. Todos los derechos reservados.
-            </p>
-            <p className="text-xs text-gray-500 mt-1">
-              Hecho con ❤️ en Lima, Perú
             </p>
           </div>
         </div>
