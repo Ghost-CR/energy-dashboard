@@ -1,3 +1,2 @@
-export interface ChatContextRepository {
-  getContext(companyId: string): Promise<ChatContext>
-}
+//memoria/contexto del bot
+
