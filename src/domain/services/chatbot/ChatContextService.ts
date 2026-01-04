@@ -1,8 +1,8 @@
 // Este es el cerebro del bot
-import { EnergyKPIs, EnergyProfile } from "../types/energy";
-import { ChatMessage } from "../types/chat";
-import { getEnergyInsights } from "../chatbot/knowledge/energyInsights";
-import { getSalesGuidance } from "../chatbot/knowledge/salesGuidance";
+import { EnergyKPIs, EnergyProfile } from "../../types/energy";
+import { ChatMessage } from "../../types/chat";
+import { getEnergyInsights } from "../../chatbot/knowledge/energyInsights";
+import { getSalesGuidance } from "../../chatbot/knowledge/salesGuidance";
 
 export class ChatContextService {
     static buildContext(
