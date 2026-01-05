@@ -1,0 +1,92 @@
+import { useEffect, useState } from 'react';
+import { ChatController } from '../../controllers/ChatController';
+import ChatMessage from './ChatMessage';
+import ChatInput from './ChatInput';
+
+export default function ChatbotPanel({
+    kpis,
+    profile,
+    onClose
+}) {
+    const [messages, setMessages] = useState([]);
+    const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        const initalMessages = ChatController.initContext(profile);
+        setMessages(initalMessages);
+    }, [kpis, profile]);
+
+    //Enviar mensaje del usuario
+const handleSend = async (text) => {
+    if (!text.trim() || loading) return
+
+    const userMessage = {
+        id: crypto.randomUUID(),
+        role: "user",
+        type: "recommendation",
+        text
+    }
+
+    setMessages(prev => [...prev, userMessage]);
+    setLoading(true);
+
+    try {
+        const botReply = await ChatController.handleUserMessage(
+            text,
+            [...messages, userMessage],
+            kpis,
+            profile
+        )
+
+        setMessages(prev => [...prev, botReply]);
+    } catch (error) {
+        setMessages(prev => [
+            ...prev,
+            {
+                id: crypto.randomUUID(),
+                role: "bot",
+                type: "warning",
+                text: "Ocurrió un error al procesar tu mensaje. Intenta de nuevo"
+            }
+        ])
+    } finally {
+        setLoading(false);
+    }
+}
+
+return (
+    <div className="w-full max-w-md h-[520px] bg-white rounded-xl shadow-xl flex flex-col border">
+      
+      {/* Header */}
+      <div className="flex items-center justify-between px-4 py-3 border-b bg-gray-50 rounded-t-xl">
+        <h3 className="font-semibold text-gray-800">
+          Asistente energético iotomato
+        </h3>
+        {onClose && (
+          <button
+            onClick={onClose}
+            className="text-gray-400 hover:text-gray-600"
+          >
+            ✕
+          </button>
+        )}
+      </div>
+
+      {/* Messages */}
+      <div className="flex-1 overflow-y-auto px-4 py-3 space-y-3 bg-gray-50">
+        {messages.map(msg => (
+          <ChatMessage key={msg.id} message={msg} />
+        ))}
+
+        {loading && (
+          <div className="text-sm text-gray-500 italic">
+            iotomato está escribiendo…
+          </div>
+        )}
+      </div>
+
+      {/* Input */}
+      <ChatInput onSend={handleSend} disabled={loading} />
+    </div>
+  )
+}

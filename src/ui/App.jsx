@@ -7,6 +7,7 @@ import DashboardSection from './sections/DashboardSection';
 import CTASection from './sections/FinalCTA';
 import SocialProof from './sections/SocialProof';
 import Footer from './components/Footer';
+import ChatbotWidget from './chatbot/ChatbotWidget';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
       <SocialProof />
       <Benefits />
       <CTASection />
+      <ChatbotWidget />
       <Footer />
     </>
   )
