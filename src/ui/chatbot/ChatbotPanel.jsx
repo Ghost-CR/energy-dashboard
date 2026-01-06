@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ChatController } from '../../controllers/ChatController';
+import { ChatController } from '../../domain/services/chatbot/ChatController';
 import ChatMessage from './ChatMessage';
 import ChatInput from './ChatInput';
 
@@ -11,10 +11,19 @@ export default function ChatbotPanel({
     const [messages, setMessages] = useState([]);
     const [loading, setLoading] = useState(false);
 
-    useEffect(() => {
-        const initalMessages = ChatController.initContext(profile);
-        setMessages(initalMessages);
-    }, [kpis, profile]);
+      useEffect(() => {
+  async function init() {
+    const messages = await ChatController.handleMessage({
+      userMessage: "Hola",
+      profile,
+      kpis,
+      history: []
+    })
+    setMessages(messages)
+  }
+
+  init()
+}, [])
 
     //Enviar mensaje del usuario
 const handleSend = async (text) => {
