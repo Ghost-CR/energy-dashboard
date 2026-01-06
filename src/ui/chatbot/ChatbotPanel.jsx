@@ -12,6 +12,10 @@ export default function ChatbotPanel({
     const [loading, setLoading] = useState(false);
 
       useEffect(() => {
+        if (!kpis || !profile) {
+        console.warn("Inicializando chatbot con perfil y KPIs", { profile, kpis })
+        return
+        }
   async function init() {
     const messages = await ChatController.handleMessage({
       userMessage: "Hola",
@@ -23,11 +27,15 @@ export default function ChatbotPanel({
   }
 
   init()
-}, [])
+}, [kpis, profile])
 
     //Enviar mensaje del usuario
 const handleSend = async (text) => {
     if (!text.trim() || loading) return
+    if (!kpis || !profile) {
+    console.warn("Mensaje bloqueado: KPIs o perfil no disponibles")
+    return
+  }
 
     const userMessage = {
         id: crypto.randomUUID(),
@@ -40,15 +48,17 @@ const handleSend = async (text) => {
     setLoading(true);
 
     try {
-        const botReply = await ChatController.handleUserMessage(
-            text,
-            [...messages, userMessage],
+        const botReply = await ChatController.handleMessage({
+            userMessage: text,
+            history: [...messages, userMessage],
             kpis,
             profile
-        )
+        })
 
-        setMessages(prev => [...prev, botReply]);
+        setMessages(prev => [...prev, ...botReply]);
     } catch (error) {
+        console.error("Error real del chatbot", error);
+
         setMessages(prev => [
             ...prev,
             {
@@ -63,6 +73,7 @@ const handleSend = async (text) => {
     }
 }
 
+if (!kpis || !profile) {
 return (
     <div className="w-full max-w-md h-[520px] bg-white rounded-xl shadow-xl flex flex-col border">
       
@@ -98,4 +109,5 @@ return (
       <ChatInput onSend={handleSend} disabled={loading} />
     </div>
   )
+}
 }

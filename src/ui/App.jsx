@@ -20,7 +20,6 @@ function App() {
       <SocialProof />
       <Benefits />
       <CTASection />
-      <ChatbotWidget />
       <Footer />
     </>
   )

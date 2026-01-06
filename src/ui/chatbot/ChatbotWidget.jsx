@@ -2,7 +2,7 @@ import { useState } from "react"
 import { MessageCircle, X } from "lucide-react"
 import ChatbotPanel from "./ChatbotPanel"
 
-export default function ChatbotWidget() {
+export default function ChatbotWidget({ kpis, profile }) {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
@@ -19,7 +19,10 @@ export default function ChatbotWidget() {
       {/* Panel del chatbot */}
       {isOpen && (
         <div className="fixed bottom-20 right-6 z-50 w-[360px] max-w-[90vw]">
-          <ChatbotPanel onClose={() => setIsOpen(false)} />
+          <ChatbotPanel 
+          kpis={kpis}
+          profile={profile}
+          onClose={() => setIsOpen(false)} />
         </div>
       )}
     </>

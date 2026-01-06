@@ -1,10 +1,33 @@
 import React, { useState } from 'react';
 import { Monitor, Bell, FileText, Maximize2, ArrowRight } from 'lucide-react';
 import EnergyDashboard from '../Dashboard';
+import { useMemo } from 'react';
+import { DashboardService } from '../../domain/services/DashboardService';
+import ChatbotWidget from '../chatbot/ChatbotWidget';
 
 const DashboardSection = () => {
   const [activeTab, setActiveTab] = useState('live');
   const [isFullscreen, setIsFullscreen] = useState(false);
+
+  const profile = "industrial";
+
+  const dashboardData = useMemo(() => {
+    return DashboardService.getDemoDashboard(profile);
+  }, [profile]);
+
+  const kpis = useMemo(() => {
+    return dashboardData?.kpis ?? null;
+  }, [dashboardData]);
+
+  return (
+    <>
+    <EnergyDashboard />
+    <ChatbotWidget
+      kpis={kpis}
+      profile={profile}
+    />
+  </>
+  )
 
   const tabs = [
     {
