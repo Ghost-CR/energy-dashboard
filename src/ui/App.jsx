@@ -8,19 +8,23 @@ import CTASection from './sections/FinalCTA';
 import SocialProof from './sections/SocialProof';
 import Footer from './components/Footer';
 import ChatbotWidget from './chatbot/ChatbotWidget';
+import { useState } from 'react';
 
 function App() {
+   const [kpis, setKpis] = useState(null)
+  const [profile, setProfile] = useState("industrial") 
   return (
     <>
       <Header />
       <Hero />
       <Problem />
       <Solution />
-      <DashboardSection />
+      <DashboardSection onKpisReady={setKpis} profile={profile} />
       <SocialProof />
       <Benefits />
       <CTASection />
       <Footer />
+      <ChatbotWidget kpis={kpis} profile={profile} />
     </>
   )
 }
