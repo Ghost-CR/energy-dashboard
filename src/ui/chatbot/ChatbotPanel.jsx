@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { ChatController } from '../../domain/services/chatbot/ChatController';
 import ChatMessage from './ChatMessage';
 import ChatInput from './ChatInput';
@@ -11,19 +11,33 @@ export default function ChatbotPanel({
     const [messages, setMessages] = useState([]);
     const [loading, setLoading] = useState(false);
 
+    // Garantizar que existan valores numéricos para evitar crash por .toFixed()
+    const safeKpis = useMemo(() => ({
+        monthlyConsumption: kpis?.monthlyConsumption ?? 0,
+        // Mapeo de propiedades para compatibilidad con ChatController (Alias)
+        totalConsumption: kpis?.totalConsumption ?? kpis?.monthlyConsumption ?? 0,
+        energyEfficiency: kpis?.energyEfficiency ?? 0,
+        efficiencyScore: kpis?.efficiencyScore ?? kpis?.energyEfficiency ?? 0,
+        anomaliesDetected: kpis?.anomaliesDetected ?? 0,
+        avgPowerFactor: kpis?.avgPowerFactor ?? 0,
+        estimatedCost: kpis?.estimatedCost ?? 0,
+        powerFactorStatus: kpis?.powerFactorStatus || "Desconocido",
+        alerts: kpis?.alerts || []
+    }), [kpis]);
+
       useEffect(() => {
-        if (!kpis || !profile) {
-        console.warn("Inicializando chatbot con perfil y KPIs", { profile, kpis })
-        return
-        }
   async function init() {
-    const messages = await ChatController.handleMessage({
-      userMessage: "Hola",
-      profile,
-      kpis,
-      history: []
-    })
-    setMessages(messages)
+    try {
+      const messages = await ChatController.handleMessage({
+        userMessage: "Hola",
+        profile: profile || "industrial",
+        kpis: safeKpis,
+        history: []
+      })
+      setMessages(messages)
+    } catch (error) {
+      console.error("Error inicializando el chatbot:", error);
+    }
   }
 
   init()
@@ -32,10 +46,6 @@ export default function ChatbotPanel({
     //Enviar mensaje del usuario
 const handleSend = async (text) => {
     if (!text.trim() || loading) return
-    if (!kpis || !profile) {
-    console.warn("Mensaje bloqueado: KPIs o perfil no disponibles")
-    return
-  }
 
     const userMessage = {
         id: crypto.randomUUID(),
@@ -51,8 +61,8 @@ const handleSend = async (text) => {
         const botReply = await ChatController.handleMessage({
             userMessage: text,
             history: [...messages, userMessage],
-            kpis,
-            profile
+            kpis: safeKpis,
+            profile: profile || "industrial"
         })
 
         setMessages(prev => [...prev, ...botReply]);
@@ -73,7 +83,6 @@ const handleSend = async (text) => {
     }
 }
 
-if (!kpis || !profile) {
 return (
     <div className="w-full max-w-md h-[520px] bg-white rounded-xl shadow-xl flex flex-col border">
       
@@ -109,5 +118,4 @@ return (
       <ChatInput onSend={handleSend} disabled={loading} />
     </div>
   )
-}
 }

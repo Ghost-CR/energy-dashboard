@@ -16,20 +16,20 @@ const DashboardSection = () => {
   }, [profile]);
 
   const kpis = useMemo(() => {
-    return dashboardData?.kpis ?? null;
+    const defaultKpis = {
+      powerFactorStatus: "Óptimo",
+      energyEfficiency: 92,
+      monthlyConsumption: 12450,
+      totalConsumption: 12450,
+      anomaliesDetected: 1,
+      avgPowerFactor: 0.98,
+      estimatedCost: 2450.00,
+      alerts: []
+    };
+    return { ...defaultKpis, ...(dashboardData?.kpis || {}) };
   }, [dashboardData]);
-
-  return (
-    <>
-    <EnergyDashboard />
-    <ChatbotWidget
-      kpis={kpis}
-      profile={profile}
-    />
-  </>
-  )
-
   const tabs = [
+
     {
       id: 'live',
       label: 'Monitoreo en Vivo',
@@ -227,6 +227,9 @@ const DashboardSection = () => {
             </p>
           </div>
         </div>
+
+        {/* Integración del Chatbot recibiendo la información de KPIs */}
+        <ChatbotWidget kpis={kpis} profile={profile} />
       </div>
     </section>
   );

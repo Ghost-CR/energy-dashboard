@@ -25,7 +25,7 @@ export function getEnergyInsights(kpis: EnergyKPIs): string[] {
     }
 
     //Alertas
-    if (kpis.alerts.length > 0) {
+    if (kpis.alerts && kpis.alerts.length > 0) {
         kpis.alerts.forEach(alert => {
             insights.push(alert.message)
         })
@@ -40,4 +40,3 @@ export function getEnergyInsights(kpis: EnergyKPIs): string[] {
 
     return insights
 }
-

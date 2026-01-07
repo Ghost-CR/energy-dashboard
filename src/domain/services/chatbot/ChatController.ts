@@ -42,14 +42,24 @@ export class ChatController {
     })
 
     //Llamar a IA
-    const aiResponse = await ChatbotAIProvider.generateResponse(aiPrompt)
+    try {
+        const aiResponse = await ChatbotAIProvider.generateResponse(aiPrompt)
 
-    responses.push({
-        id: crypto.randomUUID(),
-        role: "bot",
-        type: "recommendation",
-        text: aiResponse
-    })
+        responses.push({
+            id: crypto.randomUUID(),
+            role: "bot",
+            type: "recommendation",
+            text: aiResponse
+        })
+    } catch (error) {
+        console.error("Error al conectar con la IA:", error)
+        responses.push({
+            id: crypto.randomUUID(),
+            role: "bot",
+            type: "warning",
+            text: "Lo siento, tengo problemas para conectar con mi cerebro digital en este momento. ¿Podrías intentar de nuevo?"
+        })
+    }
 
     return responses
 }
