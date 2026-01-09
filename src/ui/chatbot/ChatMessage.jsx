@@ -1,47 +1,35 @@
-export default function ChatMessage({ message }) {
-    const { role, type, text } = message;
+export const ChatMessage = ({ message, onOptionClick }) => {
+  const isBot = message.role === 'bot';
 
-    const isUser = role === "user"
+  return (
+    <div className={`flex ${isBot ? 'justify-start' : 'justify-end'} mb-4 w-full`}>
+      <div 
+        className={`max-w-[85%] p-3 rounded-2xl shadow-sm ${
+          isBot 
+            ? 'bg-white border border-gray-200 text-gray-800 rounded-tl-none' 
+            : 'bg-blue-600 text-white rounded-tr-none'
+        }`}
+      >
+        {/* Cuerpo del mensaje */}
+        <div className="text-sm leading-relaxed whitespace-pre-wrap">
+          {message.text}
+        </div>
 
-    const baseStyle =
-    "max-w-[85%] px-4 py-2 rounded-lg text-sm leading-relaxed shadow-sm"
-
-    const roleStyle = isUser
-    ? "bg-orange-600 text-white self-end rounded-br-none"
-    : "bg-white text-gray-800 self-start rounded-bl-none border"
-
-    const typeStyle = {
-    insight: "border-l-4 border-blue-400",
-    warning: "border-l-4 border-red-500 bg-red-50",
-    recommendation: "border-l-4 border-green-500",
-    sales: "border-l-4 border-orange-400"
-  }[type] || ""
-
-   return (
-    <div className={`flex ${isUser ? "justify-end" : "justify-start"}`}>
-      <div className={`${baseStyle} ${roleStyle} ${typeStyle}`}>
-        {!isUser && (
-          <p className="text-[10px] uppercase font-semibold text-gray-400 mb-1">
-            {labelByType(type)}
-          </p>
+        {/* Renderizado de Botones (Opciones) */}
+        {isBot && message.options && message.options.length > 0 && (
+          <div className="mt-3 flex flex-wrap gap-2">
+            {message.options.map((option) => (
+              <button
+                key={option.value}
+                onClick={() => onOptionClick(option.value)}
+                className="bg-blue-50 border border-blue-200 text-blue-700 px-4 py-1.5 rounded-full text-xs font-medium hover:bg-blue-600 hover:text-white hover:border-blue-600 transition-all duration-200 active:scale-95"
+              >
+                {option.label}
+              </button>
+            ))}
+          </div>
         )}
-        <p>{text}</p>
       </div>
     </div>
-  )
-}
-
-function labelByType(type) {
-    switch (type) {
-        case "insight":
-            return "Insight energético";
-        case "warning":
-            return "Advertencia";
-        case "recommendation":
-            return "Recomendación";
-        case "sales":
-            return "Sugerencia";
-        default:
-            return "Mensaje";
-    } 
-}
+  );
+};

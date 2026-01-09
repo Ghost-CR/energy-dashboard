@@ -7,8 +7,8 @@ import DashboardSection from './sections/DashboardSection';
 import CTASection from './sections/FinalCTA';
 import SocialProof from './sections/SocialProof';
 import Footer from './components/Footer';
-import ChatbotWidget from './chatbot/ChatbotWidget';
 import { useState } from 'react';
+import { ChatbotWidget } from './chatbot/ChatbotWidget';
 
 function App() {
    const [kpis, setKpis] = useState(null)
@@ -24,7 +24,7 @@ function App() {
       <Benefits />
       <CTASection />
       <Footer />
-      <ChatbotWidget kpis={kpis} profile={profile} />
+      <ChatbotWidget />
     </>
   )
 }

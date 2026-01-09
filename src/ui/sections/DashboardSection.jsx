@@ -3,7 +3,6 @@ import { Monitor, Bell, FileText, Maximize2, ArrowRight } from 'lucide-react';
 import EnergyDashboard from '../Dashboard';
 import { useMemo } from 'react';
 import { DashboardService } from '../../domain/services/DashboardService';
-import ChatbotWidget from '../chatbot/ChatbotWidget';
 
 const DashboardSection = () => {
   const [activeTab, setActiveTab] = useState('live');
@@ -228,8 +227,6 @@ const DashboardSection = () => {
           </div>
         </div>
 
-        {/* Integración del Chatbot recibiendo la información de KPIs */}
-        <ChatbotWidget kpis={kpis} profile={profile} />
       </div>
     </section>
   );

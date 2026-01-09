@@ -1,2 +1,0 @@
-//memoria/contexto del bot
-
