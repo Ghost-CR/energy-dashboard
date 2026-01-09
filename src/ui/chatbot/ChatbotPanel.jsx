@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { ChatMessage } from './ChatMessage';
 import { ChatFlowService } from '../../domain/services/ChatFlowService';
 import { ChatbotAIProvider } from '../../infraestructure/ai/ChatbotAIProvider';
@@ -8,22 +8,17 @@ export const ChatbotPanel = () => {
   // --- 1. ESTADO DEL CHAT ---
   const [messages, setMessages] = useState([]);
   const [inputValue, setInputValue] = useState("");
-  const [inputMode, setInputMode] = useState("disabled"); // 'disabled' | 'text' | 'name' | 'email'
+  const [inputMode, setInputMode] = useState("text"); // Siempre inicia en 'text' para que el input sea funcional
   const [isLoading, setIsLoading] = useState(false);
   
-  // Datos temporales del formulario
   const [leadData, setLeadData] = useState({ name: '', email: '' });
   
-  // Auto-scroll al final
   const messagesEndRef = useRef(null);
   const scrollToBottom = () => messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   useEffect(scrollToBottom, [messages, isLoading]);
 
   // --- 2. INICIALIZACIÓN ---
   useEffect(() => {
-    // Cargamos el mensaje de bienvenida del servicio de flujo
-    // Nota: Asegúrate de tener una key 'start' o 'welcome' en tu ChatFlowService, 
-    // o llama directamente a la primera opción.
     const welcomeMsg = ChatFlowService.getNextStep('show_services'); 
     if (welcomeMsg) {
       addMessage('bot', welcomeMsg.text, welcomeMsg.options);
@@ -42,34 +37,33 @@ export const ChatbotPanel = () => {
 
   // --- 4. MANEJADOR DE CLICS (Botones) ---
   const handleOptionClick = async (value) => {
-    // A. Lógica de Navegación (Botones "Volver" o Flujos)
+    // A. Resetear chat
     if (value === 'reset') {
       setMessages([]);
       const welcome = ChatFlowService.getNextStep('show_services');
       addMessage('bot', welcome.text, welcome.options);
-      setInputMode('disabled');
-      return;
-    }
-
-    // B. Lógica de Activación de IA
-    if (value === 'mode_ai') {
-      addMessage('bot', "Estoy listo. Escribe tu consulta sobre eficiencia energética:");
       setInputMode('text');
       return;
     }
 
-    // C. Lógica de Formulario (Lead Gen)
+    // B. Activar IA explícitamente (aunque el input ya funciona)
+    if (value === 'mode_ai') {
+      addMessage('bot', "Estoy listo. ¿Qué duda tienes sobre el monitoreo de Iotomato?");
+      setInputMode('text');
+      return;
+    }
+
+    // C. Iniciar Formulario de Lead
     if (value === 'start_lead_form') {
-      addMessage('bot', "Excelente. Para agendar, primero necesito tu nombre:");
+      addMessage('bot', "Excelente decisión. Para comenzar, ¿cuál es tu nombre?");
       setInputMode('name');
       return;
     }
 
-    // D. Flujo Estándar (Navegación por árbol)
+    // D. Navegación de Flujo (Servicios)
     const response = ChatFlowService.getNextStep(value);
     if (response) {
-      addMessage('user', response.selectedLabel || "Opción seleccionada"); // Opcional: mostrar lo que eligió el usuario
-      // Pequeño delay para naturalidad
+      // Simulamos la respuesta del bot tras elegir una opción
       setTimeout(() => {
         addMessage('bot', response.text, response.options);
       }, 400);
@@ -79,59 +73,54 @@ export const ChatbotPanel = () => {
   // --- 5. MANEJADOR DE TEXTO (Input) ---
   const handleInputSubmit = async (e) => {
     e.preventDefault();
-    if (!inputValue.trim()) return;
+    if (!inputValue.trim() || isLoading) return;
 
     const text = inputValue;
-    setInputValue(""); // Limpiar input
-    addMessage('user', text); // Mostrar mensaje del usuario
+    setInputValue(""); 
+    addMessage('user', text); 
 
-    // CASO 1: Formulario (Nombre)
+    // CASO 1: Capturando Nombre
     if (inputMode === 'name') {
       setLeadData(prev => ({ ...prev, name: text }));
-      addMessage('bot', `Gracias ${text}. Ahora, por favor escribe tu correo electrónico:`);
+      addMessage('bot', `Mucho gusto, ${text}. Ahora, indícame tu correo electrónico para enviarte la información:`);
       setInputMode('email');
       return;
     }
 
-    // CASO 2: Formulario (Email)
+    // CASO 2: Capturando Email
     if (inputMode === 'email') {
-      // Validación simple de email
       if (!text.includes('@')) {
-        addMessage('bot', "El correo no parece válido. Por favor intenta de nuevo:");
+        addMessage('bot', "Por favor, introduce un correo electrónico válido (ejemplo@correo.com):");
         return;
       }
       
       setIsLoading(true);
       const finalData = { ...leadData, email: text };
-      
-      // Llamada al servicio de infraestructura
       const success = await LeadService.saveLead(finalData);
       setIsLoading(false);
 
       if (success) {
-        addMessage('bot', "¡Listo! Un asesor te contactará pronto.", [
-          { label: "Volver al inicio", value: "reset" }
+        addMessage('bot', "¡Datos recibidos! Un asesor de Iotomato te contactará en breve para agendar la demo.", [
+          { label: "Volver al inicio", value: "reset" },
+          { label: "Tengo otra duda", value: "mode_ai" }
         ]);
-        setInputMode('disabled');
+        setInputMode('text'); // Regresamos a modo texto normal
       } else {
-        addMessage('bot', "Hubo un error guardando tus datos. Inténtalo más tarde.");
+        addMessage('bot', "Lo siento, hubo un error. ¿Podrías intentar escribir tu correo de nuevo?");
       }
       return;
     }
 
-    // CASO 3: IA (Pregunta libre)
+    // CASO 3: IA (Pregunta libre - Modo por defecto)
     if (inputMode === 'text') {
       setIsLoading(true);
-      // Llamamos a la capa de infraestructura (OpenAI)
       const aiResponse = await ChatbotAIProvider.generateResponse(text, messages);
       setIsLoading(false);
       
       addMessage('bot', aiResponse, [
-        { label: "Hacer otra pregunta", value: "mode_ai" },
-        { label: "Volver al menú", value: "reset" }
+        { label: "Hablar con un asesor", value: "start_lead_form" },
+        { label: "Ver servicios", value: "reset" }
       ]);
-      // Opcional: Volver a bloquear input o dejarlo abierto
-      // setInputMode('disabled'); 
     }
   };
 
@@ -139,9 +128,11 @@ export const ChatbotPanel = () => {
   return (
     <div className="flex flex-col h-full bg-white">
       {/* HEADER */}
-      <div className="bg-blue-900 text-white p-4 flex justify-between items-center rounded-t-lg">
-        <h3 className="font-bold">Asistente Iotomato</h3>
-        {/* Aquí podrías poner el botón de cerrar si recibes onClose como prop */}
+      <div className="text-white p-4 flex justify-between items-center rounded-t-lg shadow-md" style={{ backgroundColor: '#DC0F1A' }}>
+        <div className="flex items-center gap-2">
+          <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+          <h3 className="font-bold text-sm">Asistente Iotomato</h3>
+        </div>
       </div>
 
       {/* ÁREA DE MENSAJES */}
@@ -154,39 +145,58 @@ export const ChatbotPanel = () => {
           />
         ))}
         
-        {/* Indicador de carga */}
         {isLoading && (
           <div className="flex justify-start">
-            <div className="bg-gray-200 text-gray-500 px-3 py-2 rounded-lg text-sm animate-pulse">
-              Escribiendo...
+            <div className="bg-white border border-gray-200 text-gray-400 px-4 py-2 rounded-2xl rounded-tl-none text-xs flex gap-1 shadow-sm">
+              <span className="animate-bounce">.</span>
+              <span className="animate-bounce [animation-delay:0.2s]">.</span>
+              <span className="animate-bounce [animation-delay:0.4s]">.</span>
             </div>
           </div>
         )}
         <div ref={messagesEndRef} />
       </div>
 
-      {/* ÁREA DE INPUT (Integrada) */}
-      {inputMode !== 'disabled' && (
-        <form onSubmit={handleInputSubmit} className="p-3 border-t border-gray-200 bg-white rounded-b-lg">
-          <div className="flex gap-2">
-            <input
-              type={inputMode === 'email' ? 'email' : 'text'}
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-              placeholder={inputMode === 'name' ? "Tu nombre..." : inputMode === 'email' ? "Tu correo..." : "Escribe tu duda..."}
-              className="flex-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
-              autoFocus
-            />
-            <button 
-              type="submit" 
-              disabled={isLoading}
-              className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 disabled:bg-gray-400 transition-colors"
-            >
-              Enviar
-            </button>
-          </div>
-        </form>
-      )}
+      {/* ÁREA DE INPUT: SIEMPRE VISIBLE */}
+      <form onSubmit={handleInputSubmit} className="p-3 border-t border-gray-200 bg-white">
+        <div className="flex gap-2">
+          <input
+            type={inputMode === 'email' ? 'email' : 'text'}
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+            placeholder={
+              inputMode === 'name' ? "Escribe tu nombre..." : 
+              inputMode === 'email' ? "Escribe tu email..." : 
+              "Haz una pregunta..."
+            }
+            className="flex-1 p-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 text-sm transition-all"
+            style={{ '--tw-ring-color': '#DC0F1A' }}
+            disabled={isLoading}
+          />
+          <button 
+            type="submit" 
+            disabled={isLoading || !inputValue.trim()}
+            className="text-white p-2 rounded-xl disabled:bg-gray-300 transition-colors shadow-sm"
+            style={{
+              backgroundColor: isLoading || !inputValue.trim() ? undefined : '#DC0F1A'
+            }}
+            onMouseEnter={(e) => {
+              if (!isLoading && inputValue.trim()) {
+                e.currentTarget.style.backgroundColor = '#B00D16';
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (!isLoading && inputValue.trim()) {
+                e.currentTarget.style.backgroundColor = '#DC0F1A';
+              }
+            }}
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+            </svg>
+          </button>
+        </div>
+      </form>
     </div>
   );
 };
