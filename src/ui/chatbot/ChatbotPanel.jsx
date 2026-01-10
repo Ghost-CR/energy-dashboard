@@ -16,12 +16,17 @@ export const ChatbotPanel = () => {
   const messagesEndRef = useRef(null);
   const scrollToBottom = () => messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   useEffect(scrollToBottom, [messages, isLoading]);
+  const hasInitialized = useRef(false)
 
   // --- 2. INICIALIZACIÓN ---
   useEffect(() => {
+
+    if (hasInitialized.current) return;
+
     const welcomeMsg = ChatFlowService.getNextStep('show_services'); 
     if (welcomeMsg) {
       addMessage('bot', welcomeMsg.text, welcomeMsg.options);
+      hasInitialized.current = true;
     }
   }, []);
 
