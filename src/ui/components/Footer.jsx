@@ -1,32 +1,16 @@
 import React from 'react';
-import { Zap, Mail, Phone, MapPin, Linkedin, Twitter, Facebook, Instagram, ArrowRight, X } from 'lucide-react';
+import { Mail, Phone, MapPin, Linkedin, Twitter, Facebook, Instagram, ArrowRight, X } from 'lucide-react';
 
 const Footer = () => {
   const footerLinks = {
     product: [
       { label: 'Características', href: '#features' },
       { label: 'Dashboard', href: '#dashboard' },
-      { label: 'Precios', href: '#pricing' },
-      { label: 'Casos de Éxito', href: '#cases' }
     ],
     company: [
       { label: 'Sobre Nosotros', href: '#about' },
-      { label: 'Blog', href: '#blog' },
-      { label: 'Carreras', href: '#careers' },
-      { label: 'Prensa', href: '#press' }
+      { label: 'Premios', href: '#premios' },
     ],
-    resources: [
-      { label: 'Documentación', href: '#docs' },
-      { label: 'Soporte', href: '#support' },
-      { label: 'API', href: '#api' },
-      { label: 'Estado del Sistema', href: '#status' }
-    ],
-    legal: [
-      { label: 'Privacidad', href: '#privacy' },
-      { label: 'Términos', href: '#terms' },
-      { label: 'Cookies', href: '#cookies' },
-      { label: 'Legal', href: '#legal' }
-    ]
   };
 
   const socialLinks = [
@@ -51,38 +35,18 @@ const Footer = () => {
           <div className="lg:col-span-2">
             <div className="flex items-center space-x-2 mb-4">
               <div 
-                className="w-10 h-10 rounded-xl flex items-center justify-center"
-                style={{ backgroundColor: '#DC0F1A' }}
+                className="w-20 h-20 rounded-xl flex items-center justify-center"
               >
-                <Zap className="w-6 h-6 text-white" />
+                <img 
+                  src="https://www.iotomato.com/static/logoWhite-80887a111b4c9651ebc5e91128ab9a5d.svg" 
+                  alt="iotomato logo" 
+                  className="w-20 h-20" 
+                />
               </div>
-              <span className="text-2xl font-bold text-white">iotomato</span>
             </div>
             <p className="text-sm text-gray-400 mb-6 leading-relaxed">
               Monitoreo energético inteligente que reduce costos hasta 40% con tecnología de punta y análisis en tiempo real.
             </p>
-            
-            {/* Contact Info */}
-            <div className="space-y-3">
-              <a 
-                href="mailto:contacto@iotomato.com" 
-                className="flex items-center space-x-2 text-sm hover:text-white transition-colors"
-              >
-                <Mail className="w-4 h-4" />
-                <span>contacto@iotomato.com</span>
-              </a>
-              <a 
-                href="tel:+51999999999" 
-                className="flex items-center space-x-2 text-sm hover:text-white transition-colors"
-              >
-                <Phone className="w-4 h-4" />
-                <span>+51 999 999 999</span>
-              </a>
-              <div className="flex items-start space-x-2 text-sm">
-                <MapPin className="w-4 h-4 mt-0.5 flex-shrink-0" />
-                <span>Lima, Perú</span>
-              </div>
-            </div>
           </div>
 
           {/* Product Links */}
@@ -121,68 +85,28 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Resources Links */}
-          <div>
-            <h4 className="text-white font-semibold mb-4">Recursos</h4>
-            <ul className="space-y-3">
-              {footerLinks.resources.map((link, idx) => (
-                <li key={idx}>
-                  <a 
-                    href={link.href}
-                    className="text-sm hover:text-white transition-colors flex items-center group"
-                  >
-                    <span>{link.label}</span>
-                    <ArrowRight className="w-3 h-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity" />
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Legal Links */}
-          <div>
-            <h4 className="text-white font-semibold mb-4">Legal</h4>
-            <ul className="space-y-3">
-              {footerLinks.legal.map((link, idx) => (
-                <li key={idx}>
-                  <a 
-                    href={link.href}
-                    className="text-sm hover:text-white transition-colors flex items-center group"
-                  >
-                    <span>{link.label}</span>
-                    <ArrowRight className="w-3 h-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity" />
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-
-        {/* Newsletter Section */}
-        <div className="border-t border-gray-800 pt-8 mb-8">
-          <div className="grid md:grid-cols-2 gap-8 items-center">
-            <div>
-              <h4 className="text-white font-semibold mb-2">
-                Mantente actualizado
-              </h4>
-              <p className="text-sm text-gray-400">
-                Recibe las últimas noticias sobre eficiencia energética y tecnología IoT.
-              </p>
-            </div>
-            <div className="flex gap-2">
-              <input
-                type="email"
-                placeholder="tu@email.com"
-                className="flex-1 px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-red-500 transition-colors"
-              />
-              <button 
-                className="px-6 py-3 text-white rounded-lg font-semibold transition-all duration-300 hover:scale-105"
-                style={{ backgroundColor: '#DC0F1A' }}
-                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#B00D16'}
-                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#DC0F1A'}
+          {/* Contact Info */}
+          <div className="lg:col-span-2">
+            <h4 className="text-white font-semibold mb-4">Contacto</h4>
+            <div className="space-y-3">
+              <a 
+                href="mailto:contacto@iotomato.com" 
+                className="flex items-center space-x-2 text-sm hover:text-white transition-colors"
               >
-                Suscribir
-              </button>
+                <Mail className="w-4 h-4" />
+                <span>contacto@iotomato.com</span>
+              </a>
+              <a 
+                href="tel:+51999999999" 
+                className="flex items-center space-x-2 text-sm hover:text-white transition-colors"
+              >
+                <Phone className="w-4 h-4" />
+                <span>+51 999 999 999</span>
+              </a>
+              <div className="flex items-start space-x-2 text-sm">
+                <MapPin className="w-4 h-4 mt-0.5 flex-shrink-0" />
+                <span>Lima, Perú</span>
+              </div>
             </div>
           </div>
         </div>
@@ -239,7 +163,6 @@ const Footer = () => {
             <div className="px-4 py-2 bg-gray-900 rounded border border-gray-800">
               <span className="text-sm font-bold text-white">REPSOL</span>
             </div>
-            <span className="text-xs text-gray-500">+500 empresas más</span>
           </div>
         </div>
       </div>

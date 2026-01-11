@@ -50,7 +50,7 @@ const DashboardSection = () => {
   ];
 
   return (
-    <section className="relative py-24 bg-white">
+    <section id="dashboard" className="relative py-24 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-12">
@@ -165,42 +165,6 @@ const DashboardSection = () => {
               <span className="text-sm font-semibold text-gray-700">3 alertas activas</span>
             </div>
           </div>
-        </div>
-
-        {/* Features Grid */}
-        <div className="grid md:grid-cols-3 gap-6 mt-20">
-          {[
-            {
-              title: 'Datos en Tiempo Real',
-              description: 'Monitorea cada kWh consumido con actualización instantánea.',
-              stat: '< 1 seg'
-            },
-            {
-              title: 'Alertas Inteligentes',
-              description: 'Detecta anomalías automáticamente antes de que generen costos.',
-              stat: '99.7% precisión'
-            },
-            {
-              title: 'Reportes Automáticos',
-              description: 'Exporta análisis detallados en PDF o Excel con un clic.',
-              stat: 'Ilimitados'
-            }
-          ].map((feature, idx) => (
-            <div key={idx} className="text-center p-6">
-              <div 
-                className="text-4xl font-bold mb-2"
-                style={{ color: '#DC0F1A' }}
-              >
-                {feature.stat}
-              </div>
-              <h4 className="text-lg font-bold text-gray-900 mb-2">
-                {feature.title}
-              </h4>
-              <p className="text-sm text-gray-600">
-                {feature.description}
-              </p>
-            </div>
-          ))}
         </div>
 
         {/* CTA */}

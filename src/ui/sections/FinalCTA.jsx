@@ -39,69 +39,8 @@ const CTASection = () => {
       </div>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          <div>
-            <div className="inline-flex items-center space-x-2 bg-white rounded-full px-4 py-2 border-2 border-gray-200 mb-6">
-              <Zap className="w-4 h-4" style={{ color: '#DC0F1A' }} />
-              <span className="text-sm font-semibold text-gray-700">Comienza ahora</span>
-            </div>
-
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-              Reduce tu factura
-              <span className="block" style={{ color: '#DC0F1A' }}>energética hoy</span>
-            </h2>
-
-            <p className="text-xl text-gray-600 mb-8">
-              Solicita una demo personalizada y descubre cuánto puedes ahorrar con iotomato. 
-              Sin compromiso, sin instalación complicada.
-            </p>
-
-            <div className="grid grid-cols-3 gap-4 mb-8">
-              <div className="text-center p-4 bg-white rounded-xl border-2 border-gray-200">
-                <p className="text-3xl font-bold" style={{ color: '#DC0F1A' }}>+500</p>
-                <p className="text-xs text-gray-600 mt-1">Empresas</p>
-              </div>
-              <div className="text-center p-4 bg-white rounded-xl border-2 border-gray-200">
-                <p className="text-3xl font-bold" style={{ color: '#DC0F1A' }}>40%</p>
-                <p className="text-xs text-gray-600 mt-1">Ahorro</p>
-              </div>
-              <div className="text-center p-4 bg-white rounded-xl border-2 border-gray-200">
-                <p className="text-3xl font-bold" style={{ color: '#DC0F1A' }}>48h</p>
-                <p className="text-xs text-gray-600 mt-1">Setup</p>
-              </div>
-            </div>
-
-            <div className="space-y-3">
-              {guarantees.map((guarantee, idx) => {
-                const Icon = guarantee.icon;
-                return (
-                  <div key={idx} className="flex items-center space-x-3">
-                    <div 
-                      className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0"
-                      style={{ backgroundColor: 'rgba(220, 15, 26, 0.1)' }}
-                    >
-                      <Icon className="w-4 h-4" style={{ color: '#DC0F1A' }} />
-                    </div>
-                    <span className="text-gray-700 font-medium">{guarantee.text}</span>
-                  </div>
-                );
-              })}
-            </div>
-
-            <div className="mt-8 pt-8 border-t border-gray-200">
-              <p className="text-sm text-gray-500 mb-3">Confiado por:</p>
-              <div className="flex items-center space-x-6">
-                <div className="px-4 py-2 bg-white rounded-lg border-2 border-gray-200">
-                  <span className="font-bold text-gray-900">REPSOL</span>
-                </div>
-                <div className="text-sm text-gray-600">
-                  <span className="font-bold text-gray-900">+500</span> empresas más
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-white rounded-2xl border-2 border-gray-200 p-8 shadow-2xl">
+        <div className="flex justify-center items-center">
+          <div className="bg-white rounded-2xl border-2 border-gray-200 p-8 shadow-2xl w-full max-w-md">
             {!isSubmitted ? (
               <>
                 <div className="text-center mb-6">

@@ -20,7 +20,7 @@ const Hero = () => {
   ];
 
   const benefits = [
-    'Implementación en 48 horas',
+    'Monitoreo en tiempo real',
     'Dashboard intuitivo',
     'Alertas automáticas'
   ];
@@ -40,11 +40,6 @@ const Hero = () => {
         <div className="grid lg:grid-cols-2 gap-12 items-center min-h-[80vh]">
           {/* Left Column - Content */}
           <div className={`space-y-8 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            {/* Trust badge */}
-            <div className="inline-flex items-center space-x-2 bg-white rounded-full px-4 py-2 border-2 border-gray-200 shadow-sm">
-              <CheckCircle className="w-4 h-4 text-green-500" />
-              <span className="text-sm text-gray-700 font-medium">Confiado por Repsol</span>
-            </div>
 
             {/* Headline */}
             <div>
@@ -100,21 +95,6 @@ const Hero = () => {
                 <Play className="w-5 h-5" />
                 <span>Ver Demo</span>
               </button>
-            </div>
-
-            {/* Social proof */}
-            <div className="pt-8 border-t border-gray-200">
-              <p className="text-sm text-gray-500 mb-4">Confiado por empresas líderes:</p>
-              <div className="flex items-center space-x-8">
-                {/* Repsol logo placeholder */}
-                <div className="px-6 py-3 bg-white rounded-lg border-2 border-gray-200 shadow-sm">
-                  <span className="text-2xl font-bold text-gray-900">REPSOL</span>
-                </div>
-                <div className="flex items-center space-x-2 text-gray-600">
-                  <span className="text-3xl font-bold text-gray-900">+500</span>
-                  <span className="text-sm">empresas activas</span>
-                </div>
-              </div>
             </div>
           </div>
 

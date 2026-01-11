@@ -48,18 +48,18 @@ const Benefits = () => {
 
   const comparison = {
     traditional: [
-      { text: 'Reportes manuales semanales', available: false },
-      { text: 'Detección de anomalías en días', available: false },
-      { text: 'Datos dispersos y sin contexto', available: false },
-      { text: 'Decisiones reactivas', available: false },
-      { text: 'Alto costo de implementación', available: false }
+      { text: 'Monitoreo energético para industrias de alta demanda', available: true },
+      { text: 'KPIs en tiempo real por planta y proceso', available: true },
+      { text: 'Alertas inteligentes ante anomalías eléctricas', available: true },
+      { text: 'Reducción de costos operativos', available: true },
+      { text: 'Escalable a operaciones industriales complejas', available: true }
     ],
     iotomato: [
-      { text: 'Dashboard en tiempo real 24/7', available: true },
-      { text: 'Alertas instantáneas automáticas', available: true },
-      { text: 'Datos centralizados e inteligentes', available: true },
-      { text: 'Decisiones proactivas', available: true },
-      { text: 'Implementación en 48 horas', available: true }
+      { text: 'Monitoreo energètico para oficinas y edificios', available: true },
+      { text: 'Consumo por áreas, pisos y horarios', available: true },
+      { text: 'Detección de desperdicios de energía', available: true },
+      { text: 'Optimización de gastos comunes', available: true },
+      { text: 'Alertas simples y automáticas', available: true }
     ]
   };
 
@@ -119,54 +119,18 @@ const Benefits = () => {
           })}
         </div>
 
-        {/* Features Grid */}
-        <div className="bg-gray-50 rounded-2xl p-8 md:p-12 mb-20">
-          <h3 className="text-3xl font-bold text-gray-900 text-center mb-12">
-            Todo lo que necesitas en una plataforma
-          </h3>
-          <div className="grid md:grid-cols-2 gap-6">
-            {features.map((feature, idx) => {
-              const Icon = feature.icon;
-              return (
-                <div
-                  key={idx}
-                  className="bg-white rounded-xl p-6 border-2 border-gray-200 flex items-start space-x-4 hover:border-gray-300 transition-all duration-300"
-                >
-                  <div 
-                    className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
-                    style={{ backgroundColor: 'rgba(220, 15, 26, 0.1)' }}
-                  >
-                    <Icon className="w-6 h-6" style={{ color: '#DC0F1A' }} />
-                  </div>
-                  <div>
-                    <h4 className="text-lg font-bold text-gray-900 mb-2">
-                      {feature.title}
-                    </h4>
-                    <p className="text-sm text-gray-600">
-                      {feature.description}
-                    </p>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-
         {/* Comparison Table */}
         <div className="mb-20">
           <h3 className="text-3xl font-bold text-gray-900 text-center mb-12">
-            Gestión tradicional vs iotomato
+            Pra empresas industriales y No industriales
           </h3>
           <div className="grid md:grid-cols-2 gap-8">
             {/* Traditional */}
             <div className="bg-white rounded-2xl border-2 border-gray-200 p-8">
               <div className="text-center mb-6">
                 <h4 className="text-2xl font-bold text-gray-900 mb-2">
-                  Gestión Tradicional
+                  Industriales
                 </h4>
-                <p className="text-sm text-gray-500">
-                  Métodos antiguos y lentos
-                </p>
               </div>
               <ul className="space-y-4">
                 {comparison.traditional.map((item, idx) => (
@@ -174,41 +138,26 @@ const Benefits = () => {
                     <div className="w-5 h-5 rounded-full bg-red-100 flex items-center justify-center flex-shrink-0 mt-0.5">
                       <div className="w-2 h-2 bg-red-500 rounded-full"></div>
                     </div>
-                    <span className="text-gray-600 line-through">{item.text}</span>
+                    <span className="text-gray-600">{item.text}</span>
                   </li>
                 ))}
               </ul>
             </div>
 
             {/* iotomato */}
-            <div 
-              className="rounded-2xl p-8 relative overflow-hidden"
-              style={{ 
-                background: 'linear-gradient(135deg, rgba(220, 15, 26, 0.05) 0%, rgba(220, 15, 26, 0.1) 100%)',
-                border: '2px solid #DC0F1A'
-              }}
-            >
+            <div className="bg-white rounded-2xl border-2 border-gray-200 p-8">
               <div className="absolute top-4 right-4">
-                <div 
-                  className="px-3 py-1 rounded-full text-xs font-bold text-white"
-                  style={{ backgroundColor: '#DC0F1A' }}
-                >
-                  Recomendado
-                </div>
               </div>
               <div className="text-center mb-6">
                 <h4 className="text-2xl font-bold text-gray-900 mb-2">
-                  Con iotomato
+                  No industriales
                 </h4>
-                <p className="text-sm" style={{ color: '#DC0F1A' }}>
-                  Tecnología del futuro, hoy
-                </p>
               </div>
               <ul className="space-y-4">
                 {comparison.iotomato.map((item, idx) => (
                   <li key={idx} className="flex items-start space-x-3">
                     <CheckCircle className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: '#DC0F1A' }} />
-                    <span className="text-gray-900 font-medium">{item.text}</span>
+                    <span className="text-gray-600">{item.text}</span>
                   </li>
                 ))}
               </ul>

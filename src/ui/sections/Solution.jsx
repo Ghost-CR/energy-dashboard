@@ -29,8 +29,8 @@ const Solution = () => {
     },
     {
       icon: BarChart3,
-      title: 'Recomendaciones IA',
-      description: 'Recibe insights accionables para optimizar tu eficiencia energética y reducir costos.',
+      title: 'Reportes de datos',
+      description: 'Exporta los reportes de tus datos a PDF y Excel.',
       benefits: [
         'Análisis predictivo',
         'Oportunidades de ahorro',

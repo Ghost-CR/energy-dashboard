@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Zap, Menu, X, ArrowRight, ChevronDown } from 'lucide-react';
+import { Menu, X, ArrowRight, ChevronDown } from 'lucide-react';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -15,28 +15,9 @@ const Header = () => {
   }, []);
 
   const navLinks = [
-    { 
-      label: 'Producto', 
-      href: '#product',
-      dropdown: [
-        { label: 'Características', href: '#features' },
-        { label: 'Dashboard', href: '#dashboard' },
-        { label: 'Integraciones', href: '#integrations' },
-        { label: 'Precios', href: '#pricing' }
-      ]
-    },
-    { 
-      label: 'Soluciones', 
-      href: '#solutions',
-      dropdown: [
-        { label: 'Industrial', href: '#industrial' },
-        { label: 'Comercial', href: '#commercial' },
-        { label: 'Corporativo', href: '#corporate' }
-      ]
-    },
-    { label: 'Casos de Éxito', href: '#cases' },
-    { label: 'Recursos', href: '#resources' },
-    { label: 'Empresa', href: '#company' }
+    { label: 'Dashboard', href: '#dashboard', },
+    { label: 'Reconocimientos', href: '#SocialProof' },
+    { label: 'Nosotros', href: '#company' }
   ];
 
   const handleLinkClick = (href) => {
@@ -69,18 +50,14 @@ const Header = () => {
             }}
           >
             <div 
-              className="w-10 h-10 rounded-xl flex items-center justify-center transition-transform group-hover:scale-110"
-              style={{ backgroundColor: '#DC0F1A' }}
+              className="w-15 h-15 rounded-xl flex items-center justify-center transition-transform group-hover:scale-110"
             >
-              <Zap className="w-6 h-6 text-white" />
+              <img 
+                src="https://www.iotomato.com/static/logoWhite-80887a111b4c9651ebc5e91128ab9a5d.svg" 
+                alt="iotomato logo" 
+                className="w-15 h-15" 
+              />
             </div>
-            <span 
-              className={`text-2xl font-bold transition-colors ${
-                isScrolled ? 'text-gray-900' : 'text-white'
-              }`}
-            >
-              iotomato
-            </span>
           </a>
 
           {/* Desktop Navigation */}
@@ -134,16 +111,6 @@ const Header = () => {
 
           {/* CTA Buttons */}
           <div className="hidden lg:flex items-center space-x-4">
-            <a
-              href="#login"
-              className={`px-4 py-2 font-semibold rounded-lg transition-colors ${
-                isScrolled
-                  ? 'text-gray-700 hover:text-gray-900'
-                  : 'text-white/90 hover:text-white'
-              }`}
-            >
-              Iniciar Sesión
-            </a>
             <button
               onClick={() => handleLinkClick('#cta')}
               className="flex items-center space-x-2 px-6 py-3 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
@@ -225,12 +192,6 @@ const Header = () => {
 
               {/* Mobile CTA Buttons */}
               <div className="space-y-2 pt-4 border-t border-gray-200">
-                <a
-                  href="#login"
-                  className="block px-4 py-3 text-center font-semibold text-gray-700 border-2 border-gray-300 rounded-lg hover:border-gray-400 transition-colors"
-                >
-                  Iniciar Sesión
-                </a>
                 <button
                   onClick={() => handleLinkClick('#cta')}
                   className="w-full flex items-center justify-center space-x-2 px-4 py-3 text-white rounded-lg font-semibold shadow-lg"
