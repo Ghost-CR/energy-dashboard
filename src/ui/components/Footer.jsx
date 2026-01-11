@@ -4,12 +4,12 @@ import { Mail, Phone, MapPin, Linkedin, Twitter, Facebook, Instagram, ArrowRight
 const Footer = () => {
   const footerLinks = {
     product: [
-      { label: 'Características', href: '#features' },
+      { label: 'Características', href: '#benefits' },
       { label: 'Dashboard', href: '#dashboard' },
     ],
     company: [
       { label: 'Sobre Nosotros', href: '#about' },
-      { label: 'Premios', href: '#premios' },
+      { label: 'Premios', href: '#SocialProof' },
     ],
   };
 

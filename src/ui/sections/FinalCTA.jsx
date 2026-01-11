@@ -32,7 +32,7 @@ const CTASection = () => {
   ];
 
   return (
-    <section className="relative py-24 bg-gray-50 overflow-hidden">
+    <section id="form" className="relative py-24 bg-gray-50 overflow-hidden">
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute w-96 h-96 bg-red-100 rounded-full blur-3xl opacity-30 -top-48 -right-48"></div>
         <div className="absolute w-96 h-96 bg-red-100 rounded-full blur-3xl opacity-30 -bottom-48 -left-48"></div>

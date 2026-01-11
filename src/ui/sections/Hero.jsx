@@ -78,7 +78,8 @@ const Hero = () => {
 
             {/* CTAs */}
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
-              <button 
+              <button
+              onClick={() => document.getElementById('form')?.scrollIntoView({ behavior: 'smooth' })}
                 className="group relative px-8 py-4 text-white rounded-xl font-semibold text-lg shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 flex items-center justify-center space-x-2"
                 style={{ 
                   backgroundColor: '#DC0F1A',
@@ -91,7 +92,10 @@ const Hero = () => {
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </button>
               
-              <button className="group px-8 py-4 bg-white text-gray-900 rounded-xl font-semibold text-lg border-2 border-gray-300 hover:border-gray-400 hover:bg-gray-50 transition-all duration-300 flex items-center justify-center space-x-2 shadow-md">
+              <button 
+                onClick={() => document.getElementById('dashboard')?.scrollIntoView({ behavior: 'smooth' })}
+                className="group px-8 py-4 bg-white text-gray-900 rounded-xl font-semibold text-lg border-2 border-gray-300 hover:border-gray-400 hover:bg-gray-50 transition-all duration-300 flex items-center justify-center space-x-2 shadow-md"
+              >
                 <Play className="w-5 h-5" />
                 <span>Ver Demo</span>
               </button>

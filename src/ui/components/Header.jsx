@@ -112,7 +112,7 @@ const Header = () => {
           {/* CTA Buttons */}
           <div className="hidden lg:flex items-center space-x-4">
             <button
-              onClick={() => handleLinkClick('#cta')}
+              onClick={() => handleLinkClick('#form')}
               className="flex items-center space-x-2 px-6 py-3 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
               style={{ backgroundColor: '#DC0F1A' }}
               onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#B00D16'}
