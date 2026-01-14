@@ -1,3 +1,4 @@
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import { Menu, X, ArrowRight, ChevronDown } from 'lucide-react';
 
@@ -5,6 +6,8 @@ const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -15,18 +18,25 @@ const Header = () => {
   }, []);
 
   const navLinks = [
-    { label: 'Dashboard', href: '#dashboard', },
-    { label: 'Reconocimientos', href: '#SocialProof' },
-    { label: 'Nosotros', href: '#company' }
+    { label: 'Dashboard', href: '#dashboard', isExternal: false },
+    { label: 'Reconocimientos', href: '#SocialProof', isExternal: false },
+    { label: 'Nosotros', href: '/nosotros', isExternal: true }
   ];
 
   const handleLinkClick = (href) => {
     setIsMobileMenuOpen(false);
     setActiveDropdown(null);
     // Scroll suave
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+    if (location.pathname !== '/') {
+      navigate('/');
+      // Esperamos un poco a que cargue la home para scrollear
+      setTimeout(() => {
+        const element = document.querySelector(href);
+        if (element) element.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    } else {
+      const element = document.querySelector(href);
+      if (element) element.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
@@ -62,51 +72,66 @@ const Header = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center space-x-8">
-            {navLinks.map((link, idx) => (
-              <div 
-                key={idx}
-                className="relative"
-                onMouseEnter={() => link.dropdown && setActiveDropdown(idx)}
-                onMouseLeave={() => setActiveDropdown(null)}
-              >
-                <a
-                  href={link.href}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    if (!link.dropdown) handleLinkClick(link.href);
-                  }}
-                  className={`flex items-center space-x-1 font-medium transition-colors ${
-                    isScrolled 
-                      ? 'text-gray-700 hover:text-gray-900' 
-                      : 'text-white/90 hover:text-white'
-                  }`}
-                >
-                  <span>{link.label}</span>
-                  {link.dropdown && (
-                    <ChevronDown className={`w-4 h-4 transition-transform ${activeDropdown === idx ? 'rotate-180' : ''}`} />
-                  )}
-                </a>
+            {navLinks.map((link, idx) => {
+              // Verificamos si es el enlace a la página nueva
+              const isExternal = link.href.startsWith('/');
 
-                {/* Dropdown Menu */}
-                {link.dropdown && activeDropdown === idx && (
-                  <div className="absolute top-full left-0 mt-2 w-56 bg-white rounded-xl shadow-2xl border-2 border-gray-100 py-2">
-                    {link.dropdown.map((item, dropIdx) => (
-                      <a
-                        key={dropIdx}
-                        href={item.href}
-                        onClick={(e) => {
-                          e.preventDefault();
-                          handleLinkClick(item.href);
-                        }}
-                        className="block px-4 py-3 text-gray-700 hover:bg-gray-50 transition-colors"
-                      >
-                        {item.label}
-                      </a>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ))}
+              return (
+                <div 
+                  key={idx}
+                  className="relative"
+                  onMouseEnter={() => link.dropdown && setActiveDropdown(idx)}
+                  onMouseLeave={() => setActiveDropdown(null)}
+                >
+                  {isExternal ? (
+                    /* USAMOS LINK PARA NAVEGAR A /NOSOTROS */
+                    <Link
+                      to={link.href}
+                      className={`flex items-center space-x-1 font-medium transition-colors ${
+                        isScrolled 
+                          ? 'text-gray-700 hover:text-gray-900' 
+                          : 'text-white/90 hover:text-white'
+                      }`}
+                    >
+                      <span>{link.label}</span>
+                    </Link>
+                  ) : (
+                    /* USAMOS UN BOTÓN (O <a> CON PREVENT) PARA EL SCROLL SUAVE */
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        if (!link.dropdown) handleLinkClick(link.href);
+                      }}
+                      className={`flex items-center space-x-1 font-medium transition-colors ${
+                        isScrolled 
+                          ? 'text-gray-700 hover:text-gray-900' 
+                          : 'text-white/90 hover:text-white'
+                      }`}
+                    >
+                      <span>{link.label}</span>
+                      {link.dropdown && (
+                        <ChevronDown className={`w-4 h-4 transition-transform ${activeDropdown === idx ? 'rotate-180' : ''}`} />
+                      )}
+                    </button>
+                  )}
+
+                  {/* Dropdown Menu (se mantiene igual) */}
+                  {link.dropdown && activeDropdown === idx && (
+                    <div className="absolute top-full left-0 mt-2 w-56 bg-white rounded-xl shadow-2xl border-2 border-gray-100 py-2">
+                      {link.dropdown.map((item, dropIdx) => (
+                        <button
+                          key={dropIdx}
+                          onClick={() => handleLinkClick(item.href)}
+                          className="w-full text-left block px-4 py-3 text-gray-700 hover:bg-gray-50 transition-colors"
+                        >
+                          {item.label}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
           </nav>
 
           {/* CTA Buttons */}
