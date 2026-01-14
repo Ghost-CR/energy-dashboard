@@ -16,7 +16,7 @@ export default async function handler(req, res) {
         "Authorization": `Bearer ${process.env.VITE_CHATBOT_API_KEY}`
       },
       body: JSON.stringify({
-        model: model || "gpt-3.5-turbo",
+        model: model || "gpt-5.2",
         messages: messages,
         temperature: 0.5
       })
