@@ -1,7 +1,7 @@
 import { ChatMessage } from "../../domain/types/chat";
 
 export class ChatbotAIProvider {
-  private static API_URL = "https://api.openai.com/v1/chat/completions";
+  private static API_URL = "/api/chat";
 
   static async generateResponse(userQuery: string, history: ChatMessage[] = []): Promise<string> {
     // 1. Definimos el Manual de Iotomato (System Prompt)
@@ -28,11 +28,10 @@ export class ChatbotAIProvider {
       const response = await fetch(this.API_URL, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${import.meta.env.VITE_CHATBOT_API_KEY}`
+          "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          model: "gpt-5.2",
+          model: "gpt-3.5-turbo",
           messages: [
             { role: "system", content: SYSTEM_PROMPT },
             ...recentHistory,
