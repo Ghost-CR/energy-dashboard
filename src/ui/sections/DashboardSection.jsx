@@ -140,13 +140,6 @@ const DashboardSection = () => {
               isFullscreen ? 'h-screen' : 'h-[700px]'
             }`}
           >
-            {/* Overlay para demo (opcional) */}
-            <div className="absolute top-4 right-4 z-10">
-              <div className="bg-green-500 text-white px-3 py-1 rounded-full text-xs font-semibold flex items-center space-x-1 shadow-lg">
-                <span className="w-2 h-2 bg-white rounded-full animate-pulse"></span>
-                <span>Demo en Vivo</span>
-              </div>
-            </div>
 
             {/* Dashboard Real */}
             <div className="h-full overflow-auto">
@@ -174,6 +167,7 @@ const DashboardSection = () => {
               ¿Listo para tener este nivel de control en tu empresa?
             </p>
             <button 
+              onClick={() => document.getElementById('form')?.scrollIntoView({ behavior: 'smooth' })}
               className="inline-flex items-center space-x-2 px-8 py-4 text-white rounded-xl font-semibold text-lg shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105"
               style={{ 
                 backgroundColor: '#DC0F1A',
@@ -185,9 +179,6 @@ const DashboardSection = () => {
               <span>Solicitar Demo Personalizada</span>
               <ArrowRight className="w-5 h-5" />
             </button>
-            <p className="text-sm text-gray-500 mt-3">
-              Implementación en 48 horas • Sin compromiso
-            </p>
           </div>
         </div>
 
